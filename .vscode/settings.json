@@ -5,7 +5,7 @@
 	"code-eol.color": "#3b3b3b",
 	"files.trimTrailingWhitespace": true,
 	"norminette.command": "norminette",
-	"norminette.fileregex": "^ft.*\\.[ch]$",
+	"norminette.fileregex": ".*\\.[ch]$",
 	"git.enableSmartCommit": true,
 	"42header.username": "emamenko",
 	"42header.email": "emamenko@student.42.us.org",
