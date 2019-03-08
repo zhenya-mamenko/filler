@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 00:04:58 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 10:21:03 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 10:38:13 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,24 +96,25 @@ void	get_token(t_board *b, t_token *t, const int fd)
 	char	**s;
 	int		i;
 	int		j;
-	int		ret;
 
 	if (get_next_line(fd, &line) <= 0)
 		error("reading token props.");
 	s = ft_strsplit(line, ' ');
 	t->rows = ft_atoi(s[1]);
 	t->cols = ft_atoi(s[2]);
+	ft_strdel(&line);
 	ft_free_array(1, 0, (void **)s);
 	t->shape = malloc(sizeof(t_shape));
 	init_shape(t->shape, t->rows, t->cols);
-	i = -1;
-	while ((ret = get_next_line(fd, &line)) > 0 && ++i < t->rows)
+	i = 0;
+	while (i < t->rows && (get_next_line(fd, &line) > 0))
 	{
 		j = -1;
 		while (++j < t->cols)
 			if (line[j] == '*')
 				compose_shape(t, i, j);
 		ft_strdel(&line);
+		i++;
 	}
 	calc_shape_bounds(t->shape);
 }
@@ -129,6 +130,7 @@ int		main(void)
 	get_player_data(&(f.p), fd);
 	init_board(&(f.b), fd);
 	get_next_line(fd, &line);
+	ft_strdel(&line);
 	r = -1;
 	fill_board(&(f.b), r, &(f.p), fd);
 	get_token(&(f.b), &(f.t), fd);

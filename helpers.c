@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:59:34 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 01:56:13 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 10:48:59 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ void	ft_free_array(int type, int count, void **a)
 			*a1 = NULL;
 			a1++;
 		}
+	free(a);
 }

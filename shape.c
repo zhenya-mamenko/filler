@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 01:56:08 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 10:19:15 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 10:33:11 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	compose_shape(t_token *t, int row, int col)
 		s->p[0].row = 0;
 		s->p[0].col = 0;
 		t->corner.row = -row;
-		t->corner.row = -col;
+		t->corner.col = -col;
 	}
 	else
 	{
@@ -60,4 +60,6 @@ void	calc_shape_bounds(t_shape *s)
 			min.col = s->p[i].col;
 		i++;
 	}
+	s->min = min;
+	s->max = max;
 }
