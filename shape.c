@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 01:56:08 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 10:33:11 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 12:43:53 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,12 @@ void	compose_shape(t_token *t, int row, int col)
 	s = t->shape;
 	if (s->cnt == 0)
 	{
-		s->p[0].row = 0;
-		s->p[0].col = 0;
+		set_coord(&(s->p[0]), 0, 0);
 		t->corner.row = -row;
 		t->corner.col = -col;
 	}
 	else
-	{
-		s->p[s->cnt].row = row - s->p[0].row;
-		s->p[s->cnt].col = col - s->p[0].col;
-	}
+		set_coord(&(s->p[s->cnt]), row - s->p[0].row, col - s->p[0].col);
 	s->cnt++;
 }
 
@@ -43,10 +39,8 @@ void	calc_shape_bounds(t_shape *s)
 	t_coord	max;
 	int		i;
 
-	min.col = 1000;
-	min.row = 1000;
-	max.col = -1000;
-	max.row = -1000;
+	set_coord(&min, 100000, 100000);
+	set_coord(&max, -100000, -100000);
 	i = 0;
 	while (i < s->cnt)
 	{

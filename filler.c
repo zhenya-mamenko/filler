@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 00:04:58 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 10:38:13 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 16:21:04 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	init_board(t_board *b, const int fd)
 	b->cols = ft_atoi(s);
 	p = malloc(sizeof(t_cell *) * (b->rows));
 	b->cells = p;
+	set_coord(&b->min, 100000, 100000);
+	set_coord(&b->max, -100000, -100000);
 	i = 0;
 	while (i++ < b->rows)
 	{
@@ -61,13 +63,15 @@ void	init_board(t_board *b, const int fd)
 	ft_strdel(&line);
 }
 
-void	fill_board(t_board *b, int r, t_player *p, const int fd)
+void	fill_board(t_board *b, t_player *p, const int fd)
 {
 	t_cell	*row;
 	char	*s;
 	int		i;
 	char	*line;
+	int		r;
 
+	r = -1;
 	while (++r < b->rows)
 	{
 		if (get_next_line(fd, &line) <= 0)
@@ -78,12 +82,10 @@ void	fill_board(t_board *b, int r, t_player *p, const int fd)
 		while (++i < b->cols)
 		{
 			row[i].v = ft_toupper(s[i]);
-			if (row[i].v == '.')
-				row[i].weight = 0;
-			else if (row[i].v == p->c)
-				row[i].weight = 10000;
-			else
+			row[i].weight = 0;
+			if (row[i].v != p->c && row[i].v == '.')
 				row[i].weight = -10000;
+			set_board_minmax(b, r, i, p->c);
 		}
 		ft_strdel(&s);
 		ft_strdel(&line);
@@ -123,7 +125,6 @@ int		main(void)
 {
 	t_filler	f;
 	int			fd;
-	int			r;
 	char		*line;
 
 	fd = open("/nfs/2018/e/emamenko/projects/filler/log.txt", O_RDONLY);
@@ -131,8 +132,7 @@ int		main(void)
 	init_board(&(f.b), fd);
 	get_next_line(fd, &line);
 	ft_strdel(&line);
-	r = -1;
-	fill_board(&(f.b), r, &(f.p), fd);
+	fill_board(&(f.b), &(f.p), fd);
 	get_token(&(f.b), &(f.t), fd);
 	close(fd);
 }
