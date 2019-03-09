@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 01:00:01 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 19:48:51 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 14:40:39 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_shape
 	int			cnt;
 	t_coord		min;
 	t_coord		max;
+	t_coord		best_place;
 }				t_shape;
 
 typedef struct	s_token
@@ -78,6 +79,7 @@ void			compose_shape(t_token *t, int row, int col);
 void			calc_shape_bounds(t_shape *s);
 void			set_board_minmax(t_board *b, int row, int col, char c);
 void			hitmap(t_filler *f);
-t_coord			find_place(t_filler *f);
+int				find_place(t_filler *f);
+void			place_it(t_filler *f);
 
 #endif

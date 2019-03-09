@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 00:04:58 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 19:56:39 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 15:09:57 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		main(void)
 	int			fd;
 	char		*line;
 
-	fd = open("/nfs/2018/e/emamenko/projects/filler/log.txt", O_RDONLY);
+	fd = 0;//open("/nfs/2018/e/emamenko/projects/filler/log.txt", O_RDONLY);
 	get_player_data(&(f.p), fd);
 	init_board(&(f.b), fd);
 	get_next_line(fd, &line);
@@ -135,6 +135,9 @@ int		main(void)
 	fill_board(&(f.b), &(f.p), fd);
 	get_token(&(f.t), fd);
 	hitmap(&f);
-	find_place(&f);
-	close(fd);
+	if (find_place(&f) <= -100)
+		ft_printf("-100 -100\n");
+	else
+		place_it(&f);
+	//close(fd);
 }
