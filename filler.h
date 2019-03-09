@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 01:00:01 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 18:41:39 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 19:48:51 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void			compose_shape(t_token *t, int row, int col);
 void			calc_shape_bounds(t_shape *s);
 void			set_board_minmax(t_board *b, int row, int col, char c);
 void			hitmap(t_filler *f);
+t_coord			find_place(t_filler *f);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 00:04:58 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 17:25:56 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 19:56:39 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	fill_board(t_board *b, t_player *p, const int fd)
 		{
 			row[i].v = ft_toupper(s[i]);
 			row[i].weight = 0;
-			if (row[i].v != p->c && row[i].v == '.')
+			if (row[i].v != p->c && row[i].v != '.')
 				row[i].weight = -1000000;
 			set_board_minmax(b, r, i, p->c);
 		}
@@ -92,7 +92,7 @@ void	fill_board(t_board *b, t_player *p, const int fd)
 	}
 }
 
-void	get_token(t_board *b, t_token *t, const int fd)
+void	get_token(t_token *t, const int fd)
 {
 	char	*line;
 	char	**s;
@@ -133,7 +133,8 @@ int		main(void)
 	get_next_line(fd, &line);
 	ft_strdel(&line);
 	fill_board(&(f.b), &(f.p), fd);
-	get_token(&(f.b), &(f.t), fd);
+	get_token(&(f.t), fd);
 	hitmap(&f);
+	find_place(&f);
 	close(fd);
 }
