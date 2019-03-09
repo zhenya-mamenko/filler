@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 00:04:58 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 16:21:04 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 17:25:56 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	fill_board(t_board *b, t_player *p, const int fd)
 			row[i].v = ft_toupper(s[i]);
 			row[i].weight = 0;
 			if (row[i].v != p->c && row[i].v == '.')
-				row[i].weight = -10000;
+				row[i].weight = -1000000;
 			set_board_minmax(b, r, i, p->c);
 		}
 		ft_strdel(&s);
@@ -134,5 +134,6 @@ int		main(void)
 	ft_strdel(&line);
 	fill_board(&(f.b), &(f.p), fd);
 	get_token(&(f.b), &(f.t), fd);
+	hitmap(&f);
 	close(fd);
 }

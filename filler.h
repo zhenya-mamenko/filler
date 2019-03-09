@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 01:00:01 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 16:20:54 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:41:39 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ typedef struct s_filler
 
 void			ft_free_array(int type, int count, void **a);
 void			error(char *message);
+int				ft_sqrt(int n);
 void			set_coord(t_coord *c, int row, int col);
 void			init_shape(t_shape *s, int rows, int cols);
 void			compose_shape(t_token *t, int row, int col);
 void			calc_shape_bounds(t_shape *s);
 void			set_board_minmax(t_board *b, int row, int col, char c);
+void			hitmap(t_filler *f);
 
 #endif

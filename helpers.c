@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 18:59:34 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 16:21:22 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:45:30 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,18 @@ void	ft_free_array(int type, int count, void **a)
 			a1++;
 		}
 	free(a);
+}
+
+int		ft_sqrt(int n)
+{
+	int		i;
+
+	i = 1;
+	while (i < n / 2 + 1)
+	{
+		if (i * i > n)
+			break ;
+		i++;
+	}
+	return (i);
 }
