@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:04:48 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/10 11:58:45 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/10 12:22:14 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	pt(t_filler *f, int row, int col)
 	else if (f->b.cells[row][col].v == f->p.c)
 		return (-2);
 	else
-		return (0);
+		return (1);
 }
 
 static int	eval_point(t_filler *f, t_coord c)

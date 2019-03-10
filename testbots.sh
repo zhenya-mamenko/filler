@@ -28,10 +28,15 @@ run_map() {
 }
 
 test_player() {
-	for bot in $(ls $players_dir)
+	if [[ "$3" == "--all" ]]; then
+		bots=$(ls $players_dir)
+	else
+		bots="abanlin.filler champely.filler hcao.filler carli.filler grati.filler superjeannot.filler"
+	fi
+	for bot in $bots
 	do
 		run_bot "$1" "$bot" "$2"
 	done
 }
 
-test_player "./$1" "$2"
+test_player "./$1" "$2" "$3"
