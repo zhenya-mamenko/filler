@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:46:40 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 17:31:25 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/10 01:42:40 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,15 @@ int			find_place(t_filler *f)
 	int		best;
 
 	t = f->t.shape->max.row - f->t.shape->min.row + 1;
-	min.row = f->b.min.row > t ? f->b.min.row - t : 0;
-	max.row = f->b.max.row;
+	min.row = (f->b.min.row > t - 1 ? f->b.min.row - t + 1 : 0) - 1;
+	max.row = f->b.max.row + t - 1 < f->b.rows ?
+		f->b.max.row + t - 1 : f->b.rows - 1;
 	t = f->t.shape->max.col - f->t.shape->min.col + 1;
-	min.col = f->b.min.col > t ? f->b.min.col - t : 0;
-	max.col = f->b.max.col;
+	min.col = f->b.min.col > t - 1 ? f->b.min.col - t + 1 : 0;
+	max.col = f->b.max.col + t - 1 < f->b.cols ?
+		f->b.max.col + t - 1 : f->b.cols - 1;
 	best = -100;
-	while (min.row <= max.row)
+	while (++min.row <= max.row)
 	{
 		t = min.col - 1;
 		while (++t <= max.col)
@@ -71,7 +73,6 @@ int			find_place(t_filler *f)
 			set_coord(&res, min.row, t);
 			try_place(f, res, &best);
 		}
-		min.row++;
 	}
 	return (best);
 }

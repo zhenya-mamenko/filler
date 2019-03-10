@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/09 16:14:17 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 16:42:59 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/10 12:16:09 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,24 @@ static void	set_board_minmax(t_board *b, int row, int col, char c)
 		b->min.col = col;
 }
 
+static void	allocate_cells(t_board *b)
+{
+	int		i;
+	void	*p;
+
+	p = b->cells;
+	i = 0;
+	while (i++ < b->rows)
+	{
+		*(b->cells) = malloc(sizeof(t_cell) * (b->cols));
+		(b->cells)++;
+	}
+	b->cells = p;
+}
+
 int			init_board(t_board *b, const int fd, int flag)
 {
 	char	**s;
-	int		i;
-	void	*p;
 	char	*line;
 	int		res;
 
@@ -42,17 +55,10 @@ int			init_board(t_board *b, const int fd, int flag)
 		b->rows = ft_atoi(s[1]);
 		b->cols = ft_atoi(s[2]);
 		ft_free_array(1, 0, (void **)s);
-		p = malloc(sizeof(t_cell *) * (b->rows));
-		b->cells = p;
 		set_coord(&(b->min), 100000, 100000);
 		set_coord(&(b->max), -100000, -100000);
-		i = 0;
-		while (i++ < b->rows)
-		{
-			*(b->cells) = malloc(sizeof(t_cell) * (b->cols));
-			(b->cells)++;
-		}
-		b->cells = p;
+		b->cells = malloc(sizeof(t_cell *) * (b->rows));
+		allocate_cells(b);
 	}
 	ft_strdel(&line);
 	return (res);

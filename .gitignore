@@ -6,3 +6,8 @@ log.txt
 .vscode/launch.json
 .vscode/settings.json
 resources/1
+error
+filler.trace
+out
+test.txt
+resources/vlogs.txt

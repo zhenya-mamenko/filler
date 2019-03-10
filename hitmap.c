@@ -6,45 +6,78 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:04:48 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 15:54:56 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/10 11:58:45 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	lenweight(t_filler *f, t_coord c, t_coord p, t_coord b)
+static int	pt(t_filler *f, int row, int col)
+{
+	if (f->b.cells[row][col].v == '.')
+		return (3);
+	else if (f->b.cells[row][col].v == f->p.c)
+		return (-2);
+	else
+		return (0);
+}
+
+static int	eval_point(t_filler *f, t_coord c)
+{
+	int		i;
+	int		j;
+	int		sum;
+	int		ac;
+	int		ar;
+
+	sum = 0;
+	if (f->b.rows < 7 || f->b.cols < 7)
+		return (pt(f, c.row, c.col));
+	ar = f->b.rows / 20;
+	ac = f->b.cols / 20;
+	i = c.row - 1 - ac;
+	while (i < c.row + 1 + ac)
+	{
+		j = c.col - 1 - ac;
+		while (j < c.col + 1 + ac)
+		{
+			sum += pt(f, i, j);
+			j++;
+		}
+		i++;
+	}
+	return (sum);
+}
+
+static int	lenweight(t_filler *f, t_coord c, t_coord p, int t)
 {
 	int		s;
 	int		i;
 	int		j;
 	int		k;
+	t_coord	b;
 
-	if (f->b.cells[p.row][p.col].v == f->p.c)
+	p.col = t;
+	set_coord(&b, f->b.rows / 2, f->b.cols / 2);
+	if (f->b.cells[p.row][p.col].v != f->p.c &&
+		f->b.cells[p.row][p.col].v != '.')
 		return (0);
 	s = (c.row - p.row) * (c.row - p.row) + (c.col - p.col) * (c.col - p.col);
 	j = ft_sqrt(s);
 	s = (b.row - p.row) * (b.row - p.row) + (b.col - p.col) * (b.col - p.col);
 	i = ft_sqrt(s);
-	k = ft_sqrt(b.row * b.row + b.col * b.col) / 2 + 1;
-	s = j * 2 + (k - i < 0 ? i - k : k - i) * 3;
+	k = ft_sqrt(b.row * b.row + b.col * b.col);
+	k = (i > k) ? i - k : k - i;
+	s = j * 3 + 2 * (eval_point(f, b) >= 0 ? k : i);
 	return (s);
-}
-
-static int	pt(t_filler *f, int row, int col)
-{
-	if (f->b.cells[row][col].v == '.')
-		return (0);
-	else if (f->b.cells[row][col].v == f->p.c)
-		return (-1);
-	else
-		return (2);
 }
 
 static int	areaweight(t_filler *f, t_coord p)
 {
 	int		sum;
 
-	if (f->b.cells[p.row][p.col].v == f->p.c)
+	if (f->b.cells[p.row][p.col].v != f->p.c &&
+		f->b.cells[p.row][p.col].v != '.')
 		return (0);
 	sum = 0;
 	sum += (p.row > 0) ? pt(f, p.row - 1, p.col) : 2;
@@ -66,25 +99,25 @@ void		hitmap(t_filler *f)
 	t_coord	min;
 	t_coord	max;
 	t_coord	cntr;
-	t_coord	b;
-	int		tmp;
+	int		t;
 
-	tmp = f->t.shape->max.row - f->t.shape->min.row;
-	min.row = f->b.min.row > tmp ? f->b.min.row - tmp : 0;
-	max.row = f->b.max.row + tmp < f->b.rows ? f->b.max.row + tmp : f->b.rows - 1;
-	tmp = f->t.shape->max.col - f->t.shape->min.col;
-	min.col = f->b.min.col > tmp ? f->b.min.col - tmp : 0;
-	max.col = f->b.max.col + tmp < f->b.cols ? f->b.max.col + tmp : f->b.cols - 1;
-	set_coord(&cntr, (f->b.max.row - f->b.min.row) / 2,
-		(f->b.max.col - f->b.min.col) / 2);
+	t = f->t.shape->max.row - f->t.shape->min.row;
+	min.row = f->b.min.row > t ? f->b.min.row - t : 0;
+	max.row = f->b.max.row + t < f->b.rows - 1 ?
+		f->b.max.row + t : f->b.rows - 1;
+	t = f->t.shape->max.col - f->t.shape->min.col;
+	min.col = f->b.min.col > t ? f->b.min.col - t : 0;
+	max.col = f->b.max.col + t < f->b.cols - 1 ?
+		f->b.max.col + t : f->b.cols - 1;
+	set_coord(&cntr, (f->b.max.row - f->b.min.row) / 2 + f->b.min.row,
+		(f->b.max.col - f->b.min.col) / 2 + f->b.min.col);
 	while (min.row <= max.row)
 	{
-		tmp = min.col - 1;
-		while (++tmp <= max.col)
+		t = min.col - 1;
+		while (++t <= max.col)
 		{
-			set_coord(&b, f->b.rows, f->b.cols);
-			f->b.cells[min.row][min.col].weight += lenweight(f, cntr, min, b);
-			f->b.cells[min.row][min.col].weight += areaweight(f, min);
+			f->b.cells[min.row][t].weight += lenweight(f, cntr, min, t);
+			f->b.cells[min.row][t].weight += areaweight(f, min);
 		}
 		min.row++;
 	}
