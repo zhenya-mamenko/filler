@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 01:56:08 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 14:56:06 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 16:40:40 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_shape(t_shape *s, int rows, int cols)
 {
 	s->p = (t_coord *)malloc(sizeof(t_coord) * rows * cols);
+	s->cnt = 0;
 }
 
 void	compose_shape(t_token *t, int row, int col)

@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:04:48 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/08 19:45:55 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 15:54:56 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ void		hitmap(t_filler *f)
 
 	tmp = f->t.shape->max.row - f->t.shape->min.row;
 	min.row = f->b.min.row > tmp ? f->b.min.row - tmp : 0;
-	max.row = f->b.max.row + tmp < f->b.rows ? f->b.max.row + tmp : f->b.rows;
+	max.row = f->b.max.row + tmp < f->b.rows ? f->b.max.row + tmp : f->b.rows - 1;
 	tmp = f->t.shape->max.col - f->t.shape->min.col;
 	min.col = f->b.min.col > tmp ? f->b.min.col - tmp : 0;
-	max.col = f->b.max.col + tmp < f->b.cols ? f->b.max.col + tmp : f->b.cols;
+	max.col = f->b.max.col + tmp < f->b.cols ? f->b.max.col + tmp : f->b.cols - 1;
 	set_coord(&cntr, (f->b.max.row - f->b.min.row) / 2,
 		(f->b.max.col - f->b.min.col) / 2);
 	while (min.row <= max.row)

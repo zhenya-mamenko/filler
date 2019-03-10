@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 01:00:01 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 14:40:39 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 16:43:07 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ void			ft_free_array(int type, int count, void **a);
 void			error(char *message);
 int				ft_sqrt(int n);
 void			set_coord(t_coord *c, int row, int col);
+int				init_board(t_board *b, const int fd, int flag);
+void			fill_board(t_board *b, t_player *p, const int fd);
 void			init_shape(t_shape *s, int rows, int cols);
 void			compose_shape(t_token *t, int row, int col);
 void			calc_shape_bounds(t_shape *s);
-void			set_board_minmax(t_board *b, int row, int col, char c);
 void			hitmap(t_filler *f);
 int				find_place(t_filler *f);
 void			place_it(t_filler *f);

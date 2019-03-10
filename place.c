@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 19:46:40 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/09 15:06:20 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/09 17:31:25 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			find_place(t_filler *f)
 	t = f->t.shape->max.col - f->t.shape->min.col + 1;
 	min.col = f->b.min.col > t ? f->b.min.col - t : 0;
 	max.col = f->b.max.col;
-	best = -1;
+	best = -100;
 	while (min.row <= max.row)
 	{
 		t = min.col - 1;
