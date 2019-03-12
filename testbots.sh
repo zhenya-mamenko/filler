@@ -11,7 +11,6 @@ run_bot() {
 }
 
 run_map() {
-	# echo "$1 $2 $3"
 	for i in 0 1 2
 	do
 		"$res_dir"/filler_vm -f "$1" -p1 "$2" -p2 "$3" > out
@@ -20,7 +19,6 @@ run_map() {
 		echo "$winner"
 		if [ ! -z "$error" ];
 		then
-			# mv logs.txt error_logs.txt
 			mv out error
 			exit
 		fi
@@ -28,15 +26,15 @@ run_map() {
 }
 
 test_player() {
-	if [[ "$3" == "--all" ]]; then
+	if [[ $2 == "--all" ]]; then
 		bots=$(ls $players_dir)
 	else
 		bots="abanlin.filler champely.filler hcao.filler carli.filler grati.filler superjeannot.filler"
 	fi
 	for bot in $bots
 	do
-		run_bot "$1" "$bot" "$2"
+		run_bot "./emamenko.filler" "$bot" "$1"
 	done
 }
 
-test_player "./$1" "$2" "$3"
+test_player "$1" "$2"

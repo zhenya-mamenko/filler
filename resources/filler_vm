@@ -503,15 +503,19 @@ if __FILE__ == $0
 			players[0].mode_interactive
 		end
 
-
 		if (init.verbose > 0)
 			map.show_mapcontent($stdout)
 		end
-
+		o = 0
 		while all_lose(players, trace)
 			for player in players
+				if (player.piece_char == 'O' && player.live <= 0)
+					o = 1
+				end
 				if (player.live > 0)
-					map.gene_piece()
+					if (player.piece_char == 'O' || o == 1)
+						map.gene_piece()
+					end
                                   begin
 					if init.interactif == 0
 						map.show_mapcontent(player.stdin)

@@ -6,7 +6,7 @@
 /*   By: emamenko <emamenko@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 17:04:48 by emamenko          #+#    #+#             */
-/*   Updated: 2019/03/10 12:22:14 by emamenko         ###   ########.fr       */
+/*   Updated: 2019/03/12 01:18:00 by emamenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static int	pt(t_filler *f, int row, int col)
 {
 	if (f->b.cells[row][col].v == '.')
-		return (3);
+		return (2);
 	else if (f->b.cells[row][col].v == f->p.c)
-		return (-2);
+		return (-1);
 	else
-		return (1);
+		return (2);
 }
 
 static int	eval_point(t_filler *f, t_coord c)
@@ -67,8 +67,9 @@ static int	lenweight(t_filler *f, t_coord c, t_coord p, int t)
 	s = (b.row - p.row) * (b.row - p.row) + (b.col - p.col) * (b.col - p.col);
 	i = ft_sqrt(s);
 	k = ft_sqrt(b.row * b.row + b.col * b.col);
+	j *= j < (k - 1) ? 3 : 1;
 	k = (i > k) ? i - k : k - i;
-	s = j * 3 + 2 * (eval_point(f, b) >= 0 ? k : i);
+	s = j + (eval_point(f, b) >= 0 ? k : i) * 2;
 	return (s);
 }
 
@@ -115,10 +116,8 @@ void		hitmap(t_filler *f)
 	{
 		t = min.col - 1;
 		while (++t <= max.col)
-		{
-			f->b.cells[min.row][t].weight += lenweight(f, cntr, min, t);
-			f->b.cells[min.row][t].weight += areaweight(f, min);
-		}
+			f->b.cells[min.row][t].weight += lenweight(f, cntr, min, t) +
+				areaweight(f, min);
 		min.row++;
 	}
 }
